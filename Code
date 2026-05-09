@@ -1,12 +1,13 @@
 /**
  * @brief
- * @author 
+ * @author Elliott Kristi
  */
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #define MAX_ROW 10
 #define MAX_COL 10
@@ -48,13 +49,15 @@ int main(){
     //call the print matrix function
     print_matrix(A -> data, row, col);
     
+    printf("\n");
+
     printf("Do you want to proceed a Unary or Binary Operation?\n");
     printf("Enter 'A' for Uniry and 'B' Binary: ");
 
     while(getchar() != '\n');  // flush the buffer
     char c = getchar();
 
-    if(c == 'B' || c == 'b'){
+    if(c == 'B' || c == 'b'){               //if the user wants to do a binary operation
 
         int row2, col2;
 
@@ -70,9 +73,63 @@ int main(){
         Matrix* B = create_matrix(row2, col2);
         input_matrix(B);
 
+        printf("\n");
+
         printf("Matrix entered:\n");
         //call the print matrix function
-        print_matrix(B -> data, row, col);
+        print_matrix(B -> data, row2, col2);
+
+        printf("What would you like to the operate the matrix?\n");
+        printf("A. dot product\nB. multiplication\nC. cross product\n");
+
+        c = getchar();
+        if(isalpha(c) == false){
+            while (isalpha(c) == false){
+                printf("Please enter a valid input. Try again!\n");
+                c = getchar();
+            }   
+        }
+        while(isalpha(c) == true){
+            if(c == 'A' || c == 'a'){
+                // call dot product function
+            }else if(c == 'B' || c == 'b'){
+                // call multiplication function
+            }else if(c == 'C' || c == 'c'){
+                // call cross products
+            }else{
+                printf("Please enter a valid input (A, B or C).\n");
+                c = getchar();
+            }
+        }
+    }else{                                  //if the use wants to do a unary operation
+        // ask the user which operation to be proceed
+        printf("Would you like to:");
+        printf("A. scalar multiplication\nB. transpose\nC. Derterminant\nD. Invers");
+    }
+
+    // if the use want to do unary process
+    printf("What operation would you like to do?\n");
+    printf("A. scalar multiply\nB. transpose\nC. inverse\nD. determinant\n");
+
+    c = getchar();
+    if(isalpha(c) == false){
+        while (isalpha(c) == false){
+                printf("Please enter a valid input. Try again!\n");
+                c = getchar();
+        }   
+    }
+    
+    // insert this whole if bloock into while loop.
+    if(){
+        // if user chooses A
+    }else if(){
+        // if user chooses B
+    }else if(){
+        // if chooses C
+    }else if(){
+        // if use chooses D
+    }else{
+        // if user did not choose the prepared options
     }
 
 
@@ -128,3 +185,53 @@ void print_matrix(double** pointer_mtrx, int row, int col){
     return mtrx;
 }
 
+//=== matrix operation funtions ===//
+
+// Unary operations //
+
+// Binary Operations //
+
+/**
+ * @brief
+ * @param A matrix A
+ * @param B matrix B
+ * @param m type def pointer received from main to store the result matrix
+ */
+void dot_product(Matrix* A, Matrix* B, Matrix* m){
+    // if one of the matrix = NULL print error message and exit the program
+    if(A == NULL || B == NULL){
+        printf("Error accessing the matrix. Program terminated.\n");
+        return;
+    }
+    //check if both vectors have the same length
+}
+
+/**
+ * @brief
+ * @param A matrix A
+ * @param B matrix B
+ * @param m type def pointer received from main to store the result matrix
+ */
+void multiply_matrix(Matrix* A, Matrix* B, Matrix* m){
+    // if one of the matrix = NULL print error message and exit the program
+    if(A == NULL || B == NULL){
+        printf("Error accessing the matrix. Program terminated.\n");
+        return;
+    }
+    // check if matrix matri A's row = column B's row
+}
+
+/**
+ * @brief
+ * @param A matrix A
+ * @param B matrix B
+ * @param m type def pointer received from main to store the result matrix 
+ */
+void cross_product(Matrix* A, Matrix* B, Matrix* m){
+    // if one of the matrix = NULL print error message and exit the program
+    if(A == NULL || B == NULL){
+        printf("Error accessing the matrix. Program terminated.\n");
+        return;
+    }
+    // check if both matrix are 1 x 3. only available for 1 x 3 matrices
+}
