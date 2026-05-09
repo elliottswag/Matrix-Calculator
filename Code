@@ -1,0 +1,130 @@
+/**
+ * @brief
+ * @author 
+ */
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+
+#define MAX_ROW 10
+#define MAX_COL 10
+
+typedef struct{
+    int rows;
+    int cols;
+    double **data;
+} Matrix;
+
+//function prototypes
+Matrix* create_matrix(int row, int col);
+void input_matrix(Matrix *m);
+void print_matrix(double** pointer_mtrx, int row, int col);
+
+
+
+int main(){
+
+    int row, col;
+    
+    //needs to ask the user which matrix operation they want to proceed:
+    //Unary --> Operation that needs one matrix (scalar multiply, transpose, determinant, inverse)
+    //Binary --> Operation that needs two matrix (dot product, matrix multiplication, cross product)
+
+    printf("Enter matrix A: \n");
+    printf("Enter row: ");
+    scanf("%d", &row);
+    printf("\n");
+    printf("Enter col: ");
+    scanf("%d", &col);
+    printf("\n");
+
+    printf("Enter matrix values: \n");
+    Matrix* A = create_matrix(row, col);
+    input_matrix(A);
+
+    printf("Matrix entered:\n");
+    //call the print matrix function
+    print_matrix(A -> data, row, col);
+    
+    printf("Do you want to proceed a Unary or Binary Operation?\n");
+    printf("Enter 'A' for Uniry and 'B' Binary: ");
+
+    while(getchar() != '\n');  // flush the buffer
+    char c = getchar();
+
+    if(c == 'B' || c == 'b'){
+
+        int row2, col2;
+
+        printf("Enter matrix B: \n");
+        printf("Enter row2: ");
+        scanf("%d", &row2);
+        printf("\n");
+        printf("Enter col2: ");
+        scanf("%d", &col2);
+        printf("\n");
+
+        printf("Enter matrix values: \n");
+        Matrix* B = create_matrix(row2, col2);
+        input_matrix(B);
+
+        printf("Matrix entered:\n");
+        //call the print matrix function
+        print_matrix(B -> data, row, col);
+    }
+
+
+    return 0;
+}
+
+/**
+ * @brief asks user for input to fill the allocated memory in the heap
+ * @param m typedef pointer to access the data address in memory
+ * @param row number of rows
+ * @param col number of columns in the matrix
+ */
+void input_matrix(Matrix *m){
+    for(int i = 0; i < m->rows; i++){
+        printf("row %d: \n", i + 1);
+        for(int j = 0; j < m->cols; j++){
+            scanf("%lf", &m -> data[i][j]);
+        }
+    }
+}
+
+/**
+ * @brief print matrix
+ * @param pointer_mtrx pointer to the matrix
+ * @param row the number of column in the matrix
+ * @param col the number of row in the matrix
+ */
+void print_matrix(double** pointer_mtrx, int row, int col){
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            printf("%.1f ", pointer_mtrx[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+/**
+ * @brief creates a matrix using the values sent and return the pointer to the struct
+ * @param row the number of row in the matrix
+ * @param col the number of colum in the matrix
+ * @return struct pointer to the matrix that has recently been created
+ */
+    Matrix* create_matrix(int row, int col){
+    Matrix *mtrx = malloc(sizeof(Matrix));
+    mtrx -> rows = row;
+    mtrx -> cols = col;
+
+    mtrx -> data = malloc(row * sizeof(double*));
+    for(int i = 0; i < mtrx->rows; i++){
+        mtrx -> data[i] = malloc(col * sizeof(double));
+    }
+
+    return mtrx;
+}
+
